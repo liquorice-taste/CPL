@@ -1,0 +1,1596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>170</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>170</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>170</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="font">
+   <font>
+    <family>MS PGothic</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Авиакасса</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+
+QWidget:window { /* Borders around the code editor and debug window */
+border: 0px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QToolTip {
+background-color: #80CBC4;
+color: black;
+padding: 5px;
+border-radius: 0;
+opacity: 200;
+}
+QLabel {
+background: transparent;
+color: #CFD8DC; /* Not sure about this one */
+}
+QDialog, QListView {
+background-color: #c4e8f2;
+color: #06313d;
+outline: 0;
+border: 2px solid transparent;
+}
+QTabBar {
+background: #c4e8f2;
+}
+QTabWidget::pane {
+background: transparent; /* Only at the very bottom of the tabs */
+}
+QTabBar::tab {
+background: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid transparent;
+color: #06313d;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 3px;
+padding-bottom: 3px;
+}
+QTabBar::tab:hover {
+background-color: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid #dc104d;
+color: #091a56;
+}
+QTabBar::tab:selected {
+background-color: transparent;
+border: 0px solid transparent;
+border-top: none;
+border-bottom: 2px solid #dc104d;
+color: #8c4d5f;
+}
+QStackedWidget {
+background: #c4e8f2; 
+}
+
+QGroupBox {
+margin-top: 1em;
+border-radius: 4px;
+border: 2px solid rgba(178, 178, 178, 255);
+}
+
+QGroupBox::title {
+color: #80CBC4;
+/*background-color: #dcdcdc;*/
+subcontrol-origin: margin;
+left: 6px;
+padding: 0 3px 0 3px;
+}
+QComboBox {
+	border: 1px solid #333333;
+	border-radius: 3px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #797979, stop:0.48 #696969, stop:0.52 #5e5e5e, stop:1 #4f4f4f);
+	padding: 1px 23px 1px 3px;
+	min-width: 6em;
+	color: #ffffff;
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 20px;
+ 
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+QComboBox QAbstractItemView{
+	background-color: #4f4f4f;
+	color: #999999;
+ 
+	selection-background-color: #999999;
+	selection-color: #4f4f4f;
+}
+
+/*
+QComboBox {
+font-size: 10pt;
+color: #102d49;
+background-color: transparent;
+selection-background-color: transparent;
+outline: 0;
+}
+
+QComboBox QAbstractItemView
+{ 
+selection-background-color: transparent;
+outline: 0;
+}
+*/
+/* === QCheckBox === */
+QCheckBox, QRadioButton {
+font-size: 10pt;
+color: #102d49; /*#AFBDC4;*/
+}
+
+QCheckBox::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator::checked, QTreeView::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator:disabled, QRadioButton::indicator:disabled, QTreeView::indicator:disabled {
+background-color: #444444; /* Not sure what this looks like */
+}
+
+QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disabled, QTreeView::indicator::checked:disabled { 
+background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #444444); /* Not sure what this looks like */
+}
+
+QScrollBar:horizontal {
+background: #c4e8f2; /* Background where slider is not */
+height: 10px;
+margin: 0;
+}
+
+QScrollBar:vertical {
+background: #c4e8f2; /* Background where slider is not */
+width: 10px;
+margin: 0;
+}
+
+QScrollBar::handle:horizontal {
+background: #37474F; /* Slider color */
+min-width: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+background: #37474F; /* Slider color */
+min-height: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal,
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+background: none; /* Removes the dotted background */
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { /* Hides the slider arrows */
+border: none;
+background: none;
+}
+
+QPushButton {
+/*
+background-color: transparent;
+color: #06313d;
+border: 1px solid transparent;
+padding: 4px 22px;
+*/
+font-size: 10pt;
+border: 1px solid rgba(178, 178, 178, 255);
+border-radius: 4px;
+background-color: #8c4d5f;
+color: #e3edf7;
+}
+
+QPushButton:disabled {
+background-color:#ff0000;
+}
+
+QPushButton:hover {
+color: #ffffff;
+}
+
+QPushButton:pressed {
+background-color: #730324;
+border-style: inset;
+}
+
+QLineEdit {
+font-size: 10pt;
+background: transparent;
+border: 1px solid transparent;
+border-bottom: 1px solid #06313d;
+color: #042444;
+}
+
+/*****************************************************************************
+Main Screen
+*****************************************************************************/
+QTreeView {
+background-color: #c4e8f2;
+}
+
+QMenu {
+background-color: #c4e8f2; /* File Menu Background color */
+color: #06313d;
+}
+
+QMenu::item:selected {
+color: #AFBDC4;
+}
+
+QMenu::item:pressed {
+color: #FFFFFF;
+}
+
+QMenu::separator {
+height: 1px;
+background: transparent; /* Could change this to #546E7A and reduce the margin top and bottom to 1px */
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+
+/* === QMenuBar === */
+QMenuBar {
+background-color: #c4e8f2;
+color: #06313d;
+}
+
+QMenuBar::item {
+background: transparent;
+}
+
+QMenuBar::item:disabled {
+color: gray;
+}
+
+QMenuBar::item:selected {
+color: #AFBDC4;
+}
+
+QMenuBar::item:pressed {
+color: #FFFFFF;
+}
+
+QToolBar {
+background: #c4e8f2;
+border: 1px solid transparent;
+}
+
+QToolBar:handle {
+background: transparent;
+border-left: 2px dotted #80CBC4; /* Fix the 4 handle dots so it doesn't look crappy */
+color: transparent;
+}
+
+QToolBar::separator {
+border: 0;
+}
+
+/* === QToolButton === */
+QToolButton:hover, QToolButton:pressed {
+background-color: transparent;
+}
+
+QToolButton::menu-button {
+background: url('./images/downarrowgray.png') center center no-repeat;
+background-color: #c4e8f2; /* This needs to be set to ensure the other brown arrows don't show */
+}
+
+QToolButton::menu-button:hover, QToolButton::menu-button:pressed {
+background-color: #c4e8f2;
+}
+
+QLabel {
+color: #06313d; /* Text at the bottom right corner of the screen */
+}
+
+QAbstractScrollArea { /* Borders around the code editor and debug window */
+border: 0;
+}
+
+QDialogButtonBox {
+button-layout: 0;
+}
+QTabWidget::tab-bar {
+left: 0px; 
+}
+QHeaderView {
+background: transparent;
+}
+QHeaderView::section {
+color: #102d49;
+background-color: #c4e8f2;
+padding: 4px;
+font-size: 10pt;
+border-style: none;
+border-bottom: 1px solid #102d49;
+border-right: 1px solid #102d49;}
+QHeaderView::section:horizontal{
+border-top: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+QHeaderView::section:vertical{
+border-left: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QTableCornerButton::section {
+color: #c4e8f2;
+border: 1px solid #fffff8;
+}
+
+QTableView {
+border: 2px solid rgba(178, 178, 178, 255);
+background: transparent;
+color: #06313d;
+selection-background-color: #80CBC4;
+selection-color: #FFFFFF;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1200</width>
+      <height>803</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1200</width>
+      <height>801</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1200</width>
+      <height>804</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>1</width>
+      <height>1</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <italic>false</italic>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget:window { /* Borders around the code editor and debug window */
+border: 0px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QToolTip {
+background-color: #80CBC4;
+color: black;
+padding: 5px;
+border-radius: 0;
+opacity: 200;
+}
+
+/* ==================== Dialog ==================== */
+QLabel {
+background: transparent;
+color: #CFD8DC; /* Not sure about this one */
+}
+
+QDialog, QListView {
+background-color: #c4e8f2;
+color: #06313d;
+outline: 0;
+border: 2px solid transparent;
+}
+
+QListView::item:hover {
+color: #AFBDC4;
+background: transparent;
+}
+
+QListView::item:selected {
+color: #ffffff;
+background: transparent;
+}
+
+/* === QTabBar === */
+QTabBar {
+background: #c4e8f2;
+}
+
+QTabWidget::pane {
+background: transparent; /* Only at the very bottom of the tabs */
+}
+
+QTabBar::tab {
+background: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid transparent;
+color: #06313d;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 3px;
+padding-bottom: 3px;
+}
+
+QTabBar::tab:hover {
+background-color: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid #dc104d;
+color: #091a56;
+}
+
+QTabBar::tab:selected {
+background-color: transparent;
+border: 0px solid transparent;
+border-top: none;
+border-bottom: 2px solid #dc104d;
+color: #8c4d5f;
+}
+
+QStackedWidget {
+background: #c4e8f2; /* This covers a bunch of things, I was thinking about making it transparent, */
+/* but I would have to find all the other elements... but QTabWidget::pane may be it */
+}
+
+/* === QGroupBox === */
+QGroupBox {
+margin-top: 1em;
+border-radius: 4px;
+border: 2px solid rgba(178, 178, 178, 255);
+}
+
+QGroupBox::title {
+color: #80CBC4;
+/*background-color: #dcdcdc;*/
+subcontrol-origin: margin;
+left: 6px;
+padding: 0 3px 0 3px;
+}
+QComboBox {
+	border: 1px solid #333333;
+	border-radius: 3px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #797979, stop:0.48 #696969, stop:0.52 #5e5e5e, stop:1 #4f4f4f);
+	padding: 1px 23px 1px 3px;
+	min-width: 6em;
+	color: #ffffff;
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 20px;
+ 
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+QComboBox QAbstractItemView{
+	background-color: #4f4f4f;
+	color: #999999;
+ 
+	selection-background-color: #999999;
+	selection-color: #4f4f4f;
+}
+
+/*
+QComboBox {
+font-size: 10pt;
+color: #102d49;
+background-color: transparent;
+selection-background-color: transparent;
+outline: 0;
+}
+
+QComboBox QAbstractItemView
+{ 
+selection-background-color: transparent;
+outline: 0;
+}
+*/
+/* === QCheckBox === */
+QCheckBox, QRadioButton {
+font-size: 10pt;
+color: #102d49; /*#AFBDC4;*/
+}
+
+QCheckBox::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator::checked, QTreeView::indicator::checked {
+background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #80CBC4, stop:1 #c4e8f2);
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::checked {
+background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #80CBC4, stop:1 #c4e8f2);
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator:disabled, QRadioButton::indicator:disabled, QTreeView::indicator:disabled {
+background-color: #444444; /* Not sure what this looks like */
+}
+
+QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disabled, QTreeView::indicator::checked:disabled { 
+background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #444444); /* Not sure what this looks like */
+}
+
+QTreeView {
+background-color: transparent;
+color: #06313d;
+outline: 0;
+border: 0;
+}
+
+QTreeView::item:hover {
+background-color: transparent;
+color: #AFBDC4;
+}
+
+QTreeView::item:selected {
+background-color: transparent;
+color: #FFFFFF;
+}
+
+QTreeView QHeaderView:section {
+background-color: #c4e8f2;
+color: #CFD8DC;
+border: 0;
+}
+
+
+QCheckBox::indicator::checked, QTreeView::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+/*QTreeView QScrollBar {
+background-color: #c4e8f2
+}*/
+
+QTreeView::branch {
+/* Skip - applies to everything
+*/
+}
+
+QTreeView::branch:has-siblings:adjoins-item {
+/* Skip - files */
+}
+
+QTreeView::branch:has-siblings:!adjoins-item {
+/* Skip - applies to almost all on the left side */
+}
+
+QTreeView::branch:closed:has-children:has-siblings {
+background: url('./images/rightarrowgray.png') center center no-repeat;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed {
+background: url('./images/rightarrowgray.png') center center no-repeat;
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+/* Skip - files */
+}
+
+QTreeView::branch:open:has-children:has-siblings {
+background: url('./images/downarrowgray.png') center center no-repeat;
+}
+
+QTreeView::branch:open:has-children:!has-siblings {
+background: url('./images/downarrowgray.png') center center no-repeat;
+}
+
+/* === QScrollBar:horizontal === */
+QScrollBar:horizontal {
+background: #c4e8f2; /* Background where slider is not */
+height: 10px;
+margin: 0;
+}
+
+QScrollBar:vertical {
+background: #c4e8f2; /* Background where slider is not */
+width: 10px;
+margin: 0;
+}
+
+QScrollBar::handle:horizontal {
+background: #37474F; /* Slider color */
+min-width: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+background: #37474F; /* Slider color */
+min-height: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal,
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+background: none; /* Removes the dotted background */
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { /* Hides the slider arrows */
+border: none;
+background: none;
+}
+
+QPushButton {
+/*
+background-color: transparent;
+color: #06313d;
+border: 1px solid transparent;
+padding: 4px 22px;
+*/
+font-size: 10pt;
+border: 1px solid rgba(178, 178, 178, 255);
+border-radius: 4px;
+background-color: #8c4d5f;
+color: #e3edf7;
+}
+
+QPushButton:hover {
+color: #ffffff;
+}
+
+QPushButton:pressed {
+background-color: #730324;
+border-style: inset;
+}
+
+QLineEdit {
+font-size: 10pt;
+background: transparent;
+border: 1px solid transparent;
+border-bottom: 1px solid #06313d;
+color: #658db5;
+}
+
+QSpinBox {
+background: transparent;
+border: 1px solid transparent;
+color: #06313d;
+}
+
+/*****************************************************************************
+Main Screen
+*****************************************************************************/
+QTreeView {
+background-color: #c4e8f2;
+}
+
+QMenu {
+background-color: #c4e8f2; /* File Menu Background color */
+color: #06313d;
+}
+
+QMenu::item:selected {
+color: #AFBDC4;
+}
+
+QMenu::item:pressed {
+color: #FFFFFF;
+}
+
+QMenu::separator {
+height: 1px;
+background: transparent; /* Could change this to #546E7A and reduce the margin top and bottom to 1px */
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+
+/* === QMenuBar === */
+QMenuBar {
+background-color: #c4e8f2;
+color: #06313d;
+}
+
+QMenuBar::item {
+background: transparent;
+}
+
+QMenuBar::item:disabled {
+color: gray;
+}
+
+QMenuBar::item:selected {
+color: #AFBDC4;
+}
+
+QMenuBar::item:pressed {
+color: #FFFFFF;
+}
+
+QToolBar {
+background: #c4e8f2;
+border: 1px solid transparent;
+}
+
+QToolBar:handle {
+background: transparent;
+border-left: 2px dotted #80CBC4; /* Fix the 4 handle dots so it doesn't look crappy */
+color: transparent;
+}
+
+QToolBar::separator {
+border: 0;
+}
+
+/* === QToolButton === */
+QToolButton:hover, QToolButton:pressed {
+background-color: transparent;
+}
+
+QToolButton::menu-button {
+background: url('./images/downarrowgray.png') center center no-repeat;
+background-color: #c4e8f2; /* This needs to be set to ensure the other brown arrows don't show */
+}
+
+QToolButton::menu-button:hover, QToolButton::menu-button:pressed {
+background-color: #c4e8f2;
+}
+
+QStatusBar {
+background-color: #c4e8f2;
+}
+
+QLabel {
+color: #06313d; /* Text at the bottom right corner of the screen */
+}
+
+QToolButton { /* I don't like how the items depress */
+color: #06313d;
+}
+
+QToolButton:hover, QToolButton:pressed, QToolButton:checked {
+background-color: #c4e8f2;
+}
+
+QToolButton:hover {
+color: #AFBDC4;
+
+}
+
+QToolButton:checked, QToolButton:pressed {
+color: #FFFFFF;
+}
+
+QToolButton {
+border: 1px solid transparent;
+margin:
+1px;
+}
+
+QToolButton:hover {
+background-color: transparent; /* I don't like how the down arrows in the top menu bar move down when clicked */
+border: 1px solid transparent;
+}
+
+QToolButton[popupMode=&quot;1&quot;] { /* only for MenuButtonPopup */
+padding-right: 20px; /* make way for the popup button */
+}
+
+QToolButton::menu-button {
+border-left: 1px solid transparent;
+background: transparent;
+width: 16px;
+}
+
+QToolButton::menu-button:hover {
+border-left: 1px solid transparent;
+background: transparent;
+width: 16px;
+}
+
+QStatusBar::item {
+color: #06313d;
+background-color: #c4e8f2;
+}
+
+QAbstractScrollArea { /* Borders around the code editor and debug window */
+border: 0;
+}
+
+/*****************************************************************************
+Play around with these settings
+*****************************************************************************/
+
+/* Force the dialog's buttons to follow the Windows guidelines. */
+QDialogButtonBox {
+button-layout: 0;
+}
+
+QTabWidget::tab-bar {
+left: 0px; /* Test this out on OS X, it will affect the tabs in the Options Dialog, on OS X they are centered */
+}
+
+QHeaderView {
+background: transparent;
+}
+
+QHeaderView::section {
+color: #102d49;
+background-color: #c4e8f2;
+padding: 4px;
+font-size: 10pt;
+border-style: none;
+border-bottom: 1px solid #102d49;
+border-right: 1px solid #102d49;
+}
+
+QHeaderView::section:horizontal
+{
+border-top: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QHeaderView::section:vertical
+{
+border-left: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QTableCornerButton::section {
+color: #c4e8f2;
+border: 1px solid #fffff8;
+}
+
+QTableView {
+border: 2px solid rgba(178, 178, 178, 255);
+background: transparent;
+color: #06313d;
+selection-background-color: #80CBC4;
+selection-color: #FFFFFF;
+}
+</string>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhNone</set>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <property name="tabsClosable">
+     <bool>false</bool>
+    </property>
+    <property name="movable">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="tab">
+     <property name="styleSheet">
+      <string notr="true">QTab {background-color: rgb(255, 255, 127)};</string>
+     </property>
+     <attribute name="title">
+      <string>Покупка</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>1121</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="horizontalLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>60</y>
+         <width>1121</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="leftMargin">
+         <number>15</number>
+        </property>
+        <property name="rightMargin">
+         <number>15</number>
+        </property>
+        <item>
+         <widget class="QComboBox" name="CB_cityF">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>88</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">editable :{
+     background: white};</string>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="CB_cityT">
+          <property name="minimumSize">
+           <size>
+            <width>88</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="dateEdit">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox">
+          <property name="minimumSize">
+           <size>
+            <width>88</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="duplicatesEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Поиск</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Город вылета</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>30</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Город прилета</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>505</x>
+         <y>30</y>
+         <width>161</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Дата вылета</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>715</x>
+         <y>30</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Класс обслуживания</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QTableView" name="tableView_4">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>160</y>
+        <width>1121</width>
+        <height>600</height>
+       </rect>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Отслеживание рейсов</string>
+     </attribute>
+     <widget class="QTableView" name="tableView_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>160</y>
+        <width>1121</width>
+        <height>600</height>
+       </rect>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+     </widget>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>70</y>
+        <width>811</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <widget class="QWidget" name="horizontalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>20</y>
+          <width>731</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QComboBox" name="CB_cityF_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>88</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QComboBox" name="CB_cityT_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>88</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="dateEdit_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <widget class="QLineEdit" name="LEflightd">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>151</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>Номер рейса</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>1121</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QRadioButton" name="radioButton">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>25</y>
+         <width>200</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>По направлению</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>25</y>
+         <width>200</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>По номеру рейса</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>890</x>
+         <y>50</y>
+         <width>200</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Поиск</string>
+       </property>
+      </widget>
+     </widget>
+     <zorder>tableView_3</zorder>
+     <zorder>groupBox</zorder>
+     <zorder>stackedWidget</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Личный кабинет</string>
+     </attribute>
+     <widget class="QTableView" name="tableView_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>160</y>
+        <width>1121</width>
+        <height>600</height>
+       </rect>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>1121</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QWidget" name="horizontalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>1101</width>
+         <height>102</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0,0,1">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Зарегистрироваться 
+на рейс</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_5">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Распечатать
+посадочный талон</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Распечатать билет</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

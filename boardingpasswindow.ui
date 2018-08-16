@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BoardingPassWindow</class>
+ <widget class="QMainWindow" name="BoardingPassWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>560</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Бронирование</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget:window { /* Borders around the code editor and debug window */
+border: 0px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QToolTip {
+background-color: #80CBC4;
+color: black;
+padding: 5px;
+border-radius: 0;
+opacity: 200;
+}
+QLabel {
+background: transparent;
+color: #CFD8DC; /* Not sure about this one */
+}
+QDialog, QListView {
+background-color: #c4e8f2;
+color: #06313d;
+outline: 0;
+border: 2px solid transparent;
+}
+QTabBar {
+background: #c4e8f2;
+}
+QTabWidget::pane {
+background: transparent; /* Only at the very bottom of the tabs */
+}
+QTabBar::tab {
+background: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid transparent;
+color: #06313d;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 3px;
+padding-bottom: 3px;
+}
+QTabBar::tab:hover {
+background-color: transparent;
+border: 0px solid transparent;
+border-bottom: 2px solid #dc104d;
+color: #091a56;
+}
+QTabBar::tab:selected {
+background-color: transparent;
+border: 0px solid transparent;
+border-top: none;
+border-bottom: 2px solid #dc104d;
+color: #8c4d5f;
+}
+QStackedWidget {
+background: #c4e8f2; 
+}
+
+QGroupBox {
+margin-top: 1em;
+border-radius: 4px;
+border: 2px solid rgba(178, 178, 178, 255);
+}
+
+QGroupBox::title {
+color: #80CBC4;
+/*background-color: #dcdcdc;*/
+subcontrol-origin: margin;
+left: 6px;
+padding: 0 3px 0 3px;
+}
+QComboBox {
+	border: 1px solid #333333;
+	border-radius: 3px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #797979, stop:0.48 #696969, stop:0.52 #5e5e5e, stop:1 #4f4f4f);
+	padding: 1px 23px 1px 3px;
+	min-width: 6em;
+	color: #ffffff;
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 20px;
+ 
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+QComboBox QAbstractItemView{
+	background-color: #4f4f4f;
+	color: #999999;
+ 
+	selection-background-color: #999999;
+	selection-color: #4f4f4f;
+}
+
+/*
+QComboBox {
+font-size: 10pt;
+color: #102d49;
+background-color: transparent;
+selection-background-color: transparent;
+outline: 0;
+}
+
+QComboBox QAbstractItemView
+{ 
+selection-background-color: transparent;
+outline: 0;
+}
+*/
+/* === QCheckBox === */
+QCheckBox, QRadioButton {
+font-size: 10pt;
+color: #102d49; /*#AFBDC4;*/
+}
+
+QCheckBox::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::unchecked {
+background-color: #c4e8f2;
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator::checked, QTreeView::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+}
+
+QRadioButton::indicator::checked {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.851, fx:0.489, fy:0.494318, stop:0 rgba(12, 81, 112, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #536D79;
+border-radius: 4px;
+}
+
+QCheckBox::indicator:disabled, QRadioButton::indicator:disabled, QTreeView::indicator:disabled {
+background-color: #444444; /* Not sure what this looks like */
+}
+
+QCheckBox::indicator::checked:disabled, QRadioButton::indicator::checked:disabled, QTreeView::indicator::checked:disabled { 
+background-color: qradialgradient(cx:0.5, cy:0.5, fx:0.25, fy:0.15, radius:0.3, stop:0 #BBBBBB, stop:1 #444444); /* Not sure what this looks like */
+}
+
+QScrollBar:horizontal {
+background: #c4e8f2; /* Background where slider is not */
+height: 10px;
+margin: 0;
+}
+
+QScrollBar:vertical {
+background: #c4e8f2; /* Background where slider is not */
+width: 10px;
+margin: 0;
+}
+
+QScrollBar::handle:horizontal {
+background: #37474F; /* Slider color */
+min-width: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+background: #37474F; /* Slider color */
+min-height: 16px;
+border-radius: 5px;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal,
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+background: none; /* Removes the dotted background */
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { /* Hides the slider arrows */
+border: none;
+background: none;
+}
+
+QPushButton {
+/*
+background-color: transparent;
+color: #06313d;
+border: 1px solid transparent;
+padding: 4px 22px;
+*/
+font-size: 10pt;
+border: 1px solid rgba(178, 178, 178, 255);
+border-radius: 4px;
+background-color: #8c4d5f;
+color: #e3edf7;
+}
+
+QPushButton:disabled {
+background-color:#ff0000;
+}
+
+QPushButton:hover {
+color: #ffffff;
+}
+
+QPushButton:pressed {
+background-color: #730324;
+border-style: inset;
+}
+
+QLineEdit {
+font-size: 10pt;
+background: transparent;
+border: 1px solid transparent;
+border-bottom: 1px solid #06313d;
+color: #042444;
+}
+
+/*****************************************************************************
+Main Screen
+*****************************************************************************/
+QTreeView {
+background-color: #c4e8f2;
+}
+
+QMenu {
+background-color: #c4e8f2; /* File Menu Background color */
+color: #06313d;
+}
+
+QMenu::item:selected {
+color: #AFBDC4;
+}
+
+QMenu::item:pressed {
+color: #FFFFFF;
+}
+
+QMenu::separator {
+height: 1px;
+background: transparent; /* Could change this to #546E7A and reduce the margin top and bottom to 1px */
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+
+/* === QMenuBar === */
+QMenuBar {
+background-color: #c4e8f2;
+color: #06313d;
+}
+
+QMenuBar::item {
+background: transparent;
+}
+
+QMenuBar::item:disabled {
+color: gray;
+}
+
+QMenuBar::item:selected {
+color: #AFBDC4;
+}
+
+QMenuBar::item:pressed {
+color: #FFFFFF;
+}
+
+QToolBar {
+background: #c4e8f2;
+border: 1px solid transparent;
+}
+
+QToolBar:handle {
+background: transparent;
+border-left: 2px dotted #80CBC4; /* Fix the 4 handle dots so it doesn't look crappy */
+color: transparent;
+}
+
+QToolBar::separator {
+border: 0;
+}
+
+/* === QToolButton === */
+QToolButton:hover, QToolButton:pressed {
+background-color: transparent;
+}
+
+QToolButton::menu-button {
+background: url('./images/downarrowgray.png') center center no-repeat;
+background-color: #c4e8f2; /* This needs to be set to ensure the other brown arrows don't show */
+}
+
+QToolButton::menu-button:hover, QToolButton::menu-button:pressed {
+background-color: #c4e8f2;
+}
+
+QLabel {
+color: #06313d; /* Text at the bottom right corner of the screen */
+}
+
+QAbstractScrollArea { /* Borders around the code editor and debug window */
+border: 0;
+}
+
+QDialogButtonBox {
+button-layout: 0;
+}
+QTabWidget::tab-bar {
+left: 0px; 
+}
+QHeaderView {
+background: transparent;
+}
+QHeaderView::section {
+color: #102d49;
+background-color: #c4e8f2;
+padding: 4px;
+font-size: 10pt;
+border-style: none;
+border-bottom: 1px solid #102d49;
+border-right: 1px solid #102d49;}
+QHeaderView::section:horizontal{
+border-top: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+QHeaderView::section:vertical{
+border-left: 1px solid #c4e8f2;
+background-color: #c4e8f2;
+}
+
+QTableCornerButton::section {
+color: #c4e8f2;
+border: 1px solid #fffff8;
+}
+
+QTableView {
+border: 2px solid rgba(178, 178, 178, 255);
+background: transparent;
+color: #06313d;
+selection-background-color: #80CBC4;
+selection-color: #FFFFFF;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>1161</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page_3">
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>380</y>
+        <width>1141</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777214</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Отмена</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Зарегистрироваться</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>1141</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1141</width>
+         <height>261</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_4">
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>130</y>
+        <width>511</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Спасибо за регистрацию&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Ждем вас в аэропорту!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>950</x>
+        <y>430</y>
+        <width>200</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Выход</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
