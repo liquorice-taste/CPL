@@ -14,12 +14,12 @@ class DB
 public:
     DB();
     ~DB();
-    bool connect(QString login, QString pswd);
+    bool connect(const QString &login, const QString &pswd);
     bool checkAdmin();
     QSqlDatabase* getdb();
     void debugLastError();
 private:
-    QSqlDatabase db;
+    QSqlDatabase *db;
 };
 
 #endif // DB_H

@@ -38,7 +38,6 @@ private:
 
     DB *db;
     Ui::AdminWindow *ui;
-    //enum tabs {airports, aircrafts, ""};
 };
 
 #endif // ADMINWINDOW_H

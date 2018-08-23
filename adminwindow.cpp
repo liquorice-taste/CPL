@@ -3,10 +3,11 @@
 
 AdminWindow::AdminWindow(DB *base, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::AdminWindow),
-    db(base)
+    db(base),
+    ui(new Ui::AdminWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     airports = new QSqlTableModel();
     ui->airports_TV->setModel(airports);
@@ -31,7 +32,6 @@ AdminWindow::AdminWindow(DB *base, QWidget *parent) :
 }
 
 AdminWindow::~AdminWindow() {
-    qDebug() << "deleting admin window";
     delete ui;
 }
 
@@ -39,16 +39,22 @@ void AdminWindow::on_tabWidget_currentChanged(int index) {
     switch (index) {
     case 0 :
         updateTableModel("airports", airports);
+        break;
     case 1 :
         updateTableModel("aircrafts", aircrafts);
+        break;
     case 2 :
         updateTableModel("boarding_passes", boarding_passes);
+        break;
     case 3 :
         updateTableModel("flights", flights);
+        break;
     case 4 :
         updateTableModel("seats", seats);
+        break;
     case 5 :
         updateTableModel("tickets", tickets);
+        break;
     }
 }
 
@@ -104,59 +110,65 @@ void AdminWindow::keyPressEvent(QKeyEvent *event){
                 updateTableModel("airports", airports);
             }
         }
+            break;
         case 1:{
             if (ui->aircrafts_TV->currentIndex().row() > -1){
                 aircrafts->removeRow(ui->aircrafts_TV->currentIndex().row());
                 updateTableModel("aircrafts", aircrafts);
             }
         }
+            break;
         case 2:{
             if (ui->boarding_pass_TV->currentIndex().row() > -1){
                 boarding_passes->removeRow(ui->boarding_pass_TV->currentIndex().row());
                 updateTableModel("boarding_passes", boarding_passes);
             }
         }
+            break;
         case 3:{
             if (ui->flights_TV->currentIndex().row() > -1){
                 flights->removeRow(ui->flights_TV->currentIndex().row());
                 updateTableModel("flights", flights);
             }
         }
+            break;
         case 4:{
             if (ui->seats_TV->currentIndex().row() > -1){
                 seats->removeRow(ui->seats_TV->currentIndex().row());
                 updateTableModel("seats", seats);
             }
         }
+            break;
         case 5:{
             if (ui->tickets_TV->currentIndex().row() > -1){
                 tickets->removeRow(ui->tickets_TV->currentIndex().row());
                 updateTableModel("tickets", tickets);
             }
         }
+            break;
         }
     }
 }
 
 void AdminWindow::on_pushButton_clicked() {
     switch (ui->tabWidget->currentIndex()){
-    case 0:{
+    case 0:
         airports->insertRow(airports->rowCount());
-    }
-    case 1:{
+        break;
+    case 1:
         aircrafts->insertRow(aircrafts->rowCount());
-    }
-    case 2:{
+        break;
+    case 2:
         boarding_passes->insertRow(boarding_passes->rowCount());
-    }
-    case 3:{
+        break;
+    case 3:
         flights->insertRow(flights->rowCount());
-    }
-    case 4:{
+        break;
+    case 4:
         seats->insertRow(seats->rowCount());
-    }
-    case 5:{
+        break;
+    case 5:
         tickets->insertRow(tickets->rowCount());
-    }
+        break;
     }
 }

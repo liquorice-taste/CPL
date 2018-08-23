@@ -13,7 +13,7 @@ RegistrationWindow::RegistrationWindow(QMainWindow &mainwin, QWidget *parent) :
         regdb->debugLastError();
     };
     QRegExp re("^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$");
-    QRegExpValidator *validator = new QRegExpValidator(re, this);
+    validator = new QRegExpValidator(re, this);
     ui->loginEdit->setValidator(validator);
     ui->pswdEdit1->setValidator(validator);
     ui->pswdEdit2->setValidator(validator);

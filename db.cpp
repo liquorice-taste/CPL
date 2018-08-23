@@ -1,29 +1,27 @@
 #include "db.h"
 
 DB::DB() {
-    qDebug() << "db is created";
 
 }
 
 DB::~DB(){
-    qDebug() << "db is deleted";
-    db.close();
-    db.removeDatabase(db.defaultConnection);
+    db->close();
+    db->removeDatabase(db->defaultConnection);
 }
 
-bool DB::connect(QString login, QString pswd) {
-    db = QSqlDatabase::addDatabase("QPSQL");
-    db.setDatabaseName("air");
-    db.setUserName(login);
-    db.setPassword(pswd);
-    db.setHostName("localhost");
-    db.setPort(5432);
-    bool op = db.open();
-    return(op);
+bool DB::connect(QString &login, QString &pswd) {
+    db = new QSqlDatabase();
+    db->addDatabase("QPSQL");
+    db->setDatabaseName("air");
+    db->setUserName(login);
+    db->setPassword(pswd);
+    db->setHostName("localhost");
+    db->setPort(5432);
+    return(db->open());
 }
 
 bool DB::checkAdmin(){
-    QSqlQuery q = QSqlQuery(db);
+    QSqlQuery q = QSqlQuery(*db);
     q.prepare("select check_admin();");
     q.exec();
     q.next();
@@ -31,10 +29,10 @@ bool DB::checkAdmin(){
 }
 
 QSqlDatabase *DB::getdb(){
-    return &this->db;
+    return this->db;
 }
 
 
 void DB::debugLastError(){
-    qDebug() << db.lastError().text();
+    qDebug() << db->lastError().text();
 }

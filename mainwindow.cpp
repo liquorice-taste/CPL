@@ -3,10 +3,11 @@
 
 MainWindow::MainWindow(DB *base,QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    db(base)
+    db(base),
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     QSqlQuery *q = new QSqlQuery(*db->getdb());
     QSqlQueryModel *md = new QSqlQueryModel();
@@ -93,7 +94,7 @@ void MainWindow::on_pushButton_3_clicked()
         dialog->setFileMode(QFileDialog::DirectoryOnly);
 
         QFile *outfile = new QFile();
-        QString _OutputFolder = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+        QString _OutputFolder = QFileDialog::getExistingDirectory(this, ("Select Output Folder"), QDir::currentPath());
         if (_OutputFolder != ""){
             outfile->setFileName(_OutputFolder);
             outfile->open(QIODevice::Append | QIODevice::Text);
@@ -101,11 +102,11 @@ void MainWindow::on_pushButton_3_clicked()
             ui->tableView_2->setCurrentIndex(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),0));
             QString tickt_num = ui->tableView_2->model()->data(ui->tableView_2->currentIndex()).toString();
 
-            QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-            printer->setOutputFormat(QPrinter::PdfFormat);
-            printer->setPaperSize(QPrinter::A4);
-            printer->setOutputFileName(_OutputFolder + "/ticket" + tickt_num + ".pdf");
-            QTextDocument *q = new QTextDocument();
+            QPrinter printer = QPrinter(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setPaperSize(QPrinter::A4);
+            printer.setOutputFileName(_OutputFolder + "/ticket" + tickt_num + ".pdf");
+            QTextDocument q = QTextDocument();
 
             ui->tableView_2->setCurrentIndex(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),1));
             QString flight_id = ui->tableView_2->model()->data(ui->tableView_2->currentIndex()).toString();
@@ -128,27 +129,23 @@ void MainWindow::on_pushButton_3_clicked()
             ui->tableView_2->setCurrentIndex(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),7));
             QString price = ui->tableView_2->model()->data(ui->tableView_2->currentIndex()).toString();
 
-            QSqlQuery *query = new QSqlQuery();
-            query->prepare("select * from info_for_ticket(:tickt_num);");
-            query->bindValue(0, tickt_num);
-            query->exec();
-            QString cityF;
-            QString cityT;
-            QDateTime datetimedep;
-            QDateTime datetimearr;
+            QSqlQuery query = QSqlQuery();
+            query.prepare("select * from info_for_ticket(:tickt_num);");
+            query.bindValue(0, tickt_num);
+            query.exec();
+            QString cityF, cityT;
+            QDateTime datetimedep, datetimearr;
             QTime travel_time;
-            QString airportf;
-            QString airportt;
-            QString aircraft_model;
-            while (query->next()){
-                cityF = query->value(0).toString();
-                cityT = query->value(1).toString();
-                datetimedep = query->value(2).toDateTime();
-                datetimearr = query->value(3).toDateTime();
-                travel_time = query->value(4).toTime();
-                airportf = query->value(5).toString();
-                airportt = query->value(6).toString();
-                aircraft_model = query->value(7).toString();
+            QString airportf, airportt, aircraft_model;
+            while (query.next()){
+                cityF = query.value(0).toString();
+                cityT = query.value(1).toString();
+                datetimedep = query.value(2).toDateTime();
+                datetimearr = query.value(3).toDateTime();
+                travel_time = query.value(4).toTime();
+                airportf = query.value(5).toString();
+                airportt = query.value(6).toString();
+                aircraft_model = query.value(7).toString();
             }
             QString str;
             str=
@@ -212,11 +209,10 @@ void MainWindow::on_pushButton_3_clicked()
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "</tr>"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "</tbody>"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "</table>";
-            //q.setHtml("<img src=:/images/logo.png></img>"
-            //        "<h1>Авиабилет</h1>\n<tt>Ну привет.</tt>");
-            q->setHtml(str);
-            q->setPageSize(printer->pageRect().size());
-            q->print(printer);
+
+            q.setHtml(str);
+            q.setPageSize(printer.pageRect().size());
+            q.print(&printer);
         }
     }
 }
@@ -234,31 +230,31 @@ void MainWindow::on_radioButton_2_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     if (ui->radioButton->isChecked()) {
-        QSqlQuery *q = new QSqlQuery();
+        QSqlQuery q = QSqlQuery();
         QString d = QString::number(ui->dateEdit_2->date().year()) + "-" + QString::number(ui->dateEdit_2->date().month()) + "-" + QString::number(ui->dateEdit_2->date().day());
-        q->prepare("select * from flight_status_by_route(:cityF, :cityT, :date)");
-        q->bindValue(0, ui->CB_cityF_2->currentText());
-        q->bindValue(1, ui->CB_cityT_2->currentText());
-        q->bindValue(2, d);
-        if (q->exec()) {
-        QSqlQueryModel *m = new QSqlQueryModel();
-        m->setQuery(*q);
-        m->setHeaderData(0, Qt::Horizontal, QObject::tr("Номер рейса"));
-        m->setHeaderData(1, Qt::Horizontal, QObject::tr("Статус"));
-        m->setHeaderData(2, Qt::Horizontal, QObject::tr("Время вылета"));
-        m->setHeaderData(3, Qt::Horizontal, QObject::tr("Время прилета"));
-        m->setHeaderData(4, Qt::Horizontal, QObject::tr("Аэропорт вылета"));
-        m->setHeaderData(5, Qt::Horizontal, QObject::tr("Аэропорт прибытия"));
-        m->setHeaderData(6, Qt::Horizontal, QObject::tr("Самолет"));
-        ui->tableView_3->setModel(m);
+        q.prepare("select * from flight_status_by_route(:cityF, :cityT, :date)");
+        q.bindValue(0, ui->CB_cityF_2->currentText());
+        q.bindValue(1, ui->CB_cityT_2->currentText());
+        q.bindValue(2, d);
+        if (q.exec()) {
+            QSqlQueryModel *m = new QSqlQueryModel();
+            m->setQuery(q);
+            m->setHeaderData(0, Qt::Horizontal, QObject::tr("Номер рейса"));
+            m->setHeaderData(1, Qt::Horizontal, QObject::tr("Статус"));
+            m->setHeaderData(2, Qt::Horizontal, QObject::tr("Время вылета"));
+            m->setHeaderData(3, Qt::Horizontal, QObject::tr("Время прилета"));
+            m->setHeaderData(4, Qt::Horizontal, QObject::tr("Аэропорт вылета"));
+            m->setHeaderData(5, Qt::Horizontal, QObject::tr("Аэропорт прибытия"));
+            m->setHeaderData(6, Qt::Horizontal, QObject::tr("Самолет"));
+            ui->tableView_3->setModel(m);
         }
     } else if (ui->radioButton_2->isChecked()) {
-        QSqlQuery *q = new QSqlQuery();
-        q->prepare("select * from flight_status_by_id(:fl_id)");
-        q->bindValue(0, ui->LEflightd->text());
-        q->exec();
+        QSqlQuery q = QSqlQuery();
+        q.prepare("select * from flight_status_by_id(:fl_id)");
+        q.bindValue(0, ui->LEflightd->text());
+        q.exec();
         QSqlQueryModel *md = new QSqlQueryModel();
-        md->setQuery(*q);
+        md->setQuery(q);
         md->setHeaderData(0, Qt::Horizontal, QObject::tr("Номер рейса"));
         md->setHeaderData(1, Qt::Horizontal, QObject::tr("Статус"));
         md->setHeaderData(2, Qt::Horizontal, QObject::tr("Время вылета"));
@@ -299,7 +295,7 @@ void MainWindow::on_tableView_4_doubleClicked(const QModelIndex &index)
     QString price = ui->tableView_4->model()->data(ui->tableView_4->currentIndex()).toString();
 
 
-    PurchaseWindow * w = new PurchaseWindow(this, db, flight_id, current_fc, price);
+    PurchaseWindow *w = new PurchaseWindow(this, db, flight_id, current_fc, price);
     w->show();
     this->hide();
 }
@@ -308,116 +304,109 @@ void MainWindow::on_pushButton_5_clicked()
 {
     if (ui->tableView_2->currentIndex().row() > -1) {
 
-        QFileDialog *dialog = new QFileDialog();
-        dialog->setFileMode(QFileDialog::DirectoryOnly);
+        QFileDialog dialog = QFileDialog();
+        dialog.setFileMode(QFileDialog::DirectoryOnly);
 
-        QFile *outfile = new QFile();
-        QString _OutputFolder = QFileDialog::getExistingDirectory(0, ("Select Output Folder"), QDir::currentPath());
+        QFile outfile = QFile();
+        QString _OutputFolder = QFileDialog::getExistingDirectory(this, ("Select Output Folder"), QDir::currentPath());
         if (_OutputFolder != ""){
-            outfile->setFileName(_OutputFolder);
-            outfile->open(QIODevice::Append | QIODevice::Text);
-
+            outfile.setFileName(_OutputFolder);
+            outfile.open(QIODevice::Append | QIODevice::Text);
 
             ui->tableView_2->setCurrentIndex(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),0));
             QString tickt_num = ui->tableView_2->model()->data(ui->tableView_2->currentIndex()).toString();
 
-            QSqlQuery *query = new QSqlQuery();
-            query->prepare("select * from info_for_boarding_pass(:tickt_num);");
-            query->bindValue(0, tickt_num);
-            query->exec();
-            QString cityF;
-            QString cityT;
-            QDateTime datetimedep;
-            QDateTime datetimearr;
-            QString airportf;
-            QString airportt;
-            QString seat_no;
-            QString flight_id;
-            QString name;
-            QString surname;
+            QSqlQuery query = QSqlQuery();
+            query.prepare("select * from info_for_boarding_pass(:tickt_num);");
+            query.bindValue(0, tickt_num);
+            query.exec();
+            QString cityF, cityT;
+            QDateTime datetimedep, datetimearr;
+            QString airportf, airportt, seat_no, flight_id,
+                    name, surname, b_no;
             QTime b_before;
-            QString b_no;
-            while (query->next()){
-                cityF = query->value(0).toString();
-                cityT = query->value(1).toString();
-                datetimedep = query->value(2).toDateTime();
-                datetimearr = query->value(3).toDateTime();
-                airportf = query->value(4).toString();
-                airportt = query->value(5).toString();
-                seat_no = query->value(6).toString();
-                flight_id = query->value(7).toString();
-                surname = query->value(8).toString();
-                name = query->value(9).toString();
-                b_no = query->value(10).toString();
+
+            while (query.next()){
+                cityF = query.value(0).toString();
+                cityT = query.value(1).toString();
+                datetimedep = query.value(2).toDateTime();
+                datetimearr = query.value(3).toDateTime();
+                airportf = query.value(4).toString();
+                airportt = query.value(5).toString();
+                seat_no = query.value(6).toString();
+                flight_id = query.value(7).toString();
+                surname = query.value(8).toString();
+                name = query.value(9).toString();
+                b_no = query.value(10).toString();
             }
             b_before = datetimedep.time().addSecs(-1800);
             QString str;
             str= "<h1><span style='color: #993366;'>&nbsp; Посадочный талон</span></h1>"
-                    "<h2><span style='color: #000000;'>&nbsp; &nbsp;"+surname + " " + name + "</span></h2>"
-                    "<table style='height: 73px; width: 518px; background-color: #e0e2e5; margin-left: auto; margin-right: auto;'>"
-                    "<tbody>"
-                    "<tr>"
-                    "<td style='width: 96px;'>&nbsp;</td>"
-                    "<td style='width: 113px; text-align: right;'><span style='color: #993366;'>из</span></td>"
-                    "<td style='width: 65.6667px;'><span style='color: #993366;'>&nbsp;</span></td>"
-                    "<td style='width: 113.333px;'><span style='color: #993366;'>в</span></td>"
-                    "<td style='width: 99px;'>&nbsp;</td>"
-                    "</tr>"
-                    "<tr>"
-                    "<td style='width: 96px; text-align: right;'>вылет"
-                    "<p style='text-align: right;'>"+datetimedep.time().toString()+"</p>"
-                    "<p style='text-align: right;'>"+datetimedep.date().toString()+"</p>"
-                    "</td>"
-                    "<td style='width: 113px; text-align: right;'>"
-                    "<h1><strong>"+airportf+"</strong></h1>"
-                    "</td>"
-                    "<td style='width: 65.6667px;'><img src='qrc:/images/plane.png' width='110' height='94' /></td>"
-                    "<td style='width: 113.333px;'>"
-                    "<h1><strong>"+airportt+"</strong></h1>"
-                    "</td>"
-                    "<td style='width: 99px;'>"
-                    "<p>прилет</p>"
-                    "<p>"+datetimearr.time().toString()+"</p>"
-                    "<p>"+datetimearr.date().toString()+"</p>"
-                    "</td>"
-                    "</tr>"
-                    "<tr>"
-                    "<td style='width: 209px; text-align: right;' colspan='2'>" + airportf + "</td>"
-                    "<td style='width: 65.6667px;'>&nbsp;</td>"
-                    "<td style='width: 212.333px;' colspan='2'>" + airportt + "</td>"
-                    "</tr>"
-                    "</tbody>"
-                    "</table>"
-                    "<table style='width: 518px; margin-left: auto; margin-right: auto;'>"
-                    "<tbody>"
-                    "<tr>"
-                    "<td><span style='color: #993366;'>Рейс</span></td>"
-                    "<td><span style='color: #993366;'>Место</span></td>"
-                    "<td><span style='color: #993366;'>Посадка до</span></td>"
-                    "<td><span style='color: #993366;'>№ регистрации</span></td>"
-                    "<td><span style='color: #993366;'>Выход</span></td>"
-                    "</tr>"
-                    "<tr>"
-                    "<td><strong>" + flight_id + "</strong></td>"
-                    "<td><strong>" + seat_no + "</strong></td>"
-                    "<td><strong>" + b_before.toString() + "</strong></td>"
-                    "<td><strong>" + b_no + "</strong></td>"
-                    "<td>"
-                    "<p><strong>уточните на </strong></p>"
-                    "<p><strong>мониторах</strong></p>"
-                    "</td>"
-                    "</tr>"
-                    "</tbody>"
-                    "</table>";
+                 "<h2><span style='color: #000000;'>&nbsp; &nbsp;"+surname + " " + name + "</span></h2>"
+                                                                                          "<table style='height: 73px; width: 518px; background-color: #e0e2e5; margin-left: auto; margin-right: auto;'>"
+                                                                                          "<tbody>"
+                                                                                          "<tr>"
+                                                                                          "<td style='width: 96px;'>&nbsp;</td>"
+                                                                                          "<td style='width: 113px; text-align: right;'><span style='color: #993366;'>из</span></td>"
+                                                                                          "<td style='width: 65.6667px;'><span style='color: #993366;'>&nbsp;</span></td>"
+                                                                                          "<td style='width: 113.333px;'><span style='color: #993366;'>в</span></td>"
+                                                                                          "<td style='width: 99px;'>&nbsp;</td>"
+                                                                                          "</tr>"
+                                                                                          "<tr>"
+                                                                                          "<td style='width: 96px; text-align: right;'>вылет"
+                                                                                          "<p style='text-align: right;'>"+datetimedep.time().toString()+"</p>"
+                                                                                                                                                         "<p style='text-align: right;'>"+datetimedep.date().toString()+"</p>"
+                                                                                                                                                                                                                        "</td>"
+                                                                                                                                                                                                                        "<td style='width: 113px; text-align: right;'>"
+                                                                                                                                                                                                                        "<h1><strong>"+airportf+"</strong></h1>"
+                                                                                                                                                                                                                                                "</td>"
+                                                                                                                                                                                                                                                "<td style='width: 65.6667px;'><img src='qrc:/images/plane.png' width='110' height='94' /></td>"
+                                                                                                                                                                                                                                                "<td style='width: 113.333px;'>"
+                                                                                                                                                                                                                                                "<h1><strong>"+airportt+"</strong></h1>"
+                                                                                                                                                                                                                                                                        "</td>"
+                                                                                                                                                                                                                                                                        "<td style='width: 99px;'>"
+                                                                                                                                                                                                                                                                        "<p>прилет</p>"
+                                                                                                                                                                                                                                                                        "<p>"+datetimearr.time().toString()+"</p>"
+                                                                                                                                                                                                                                                                                                            "<p>"+datetimearr.date().toString()+"</p>"
+                                                                                                                                                                                                                                                                                                                                                "</td>"
+                                                                                                                                                                                                                                                                                                                                                "</tr>"
+                                                                                                                                                                                                                                                                                                                                                "<tr>"
+                                                                                                                                                                                                                                                                                                                                                "<td style='width: 209px; text-align: right;' colspan='2'>" + airportf + "</td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                         "<td style='width: 65.6667px;'>&nbsp;</td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                         "<td style='width: 212.333px;' colspan='2'>" + airportt + "</td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "</tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "</tbody>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "</table>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<table style='width: 518px; margin-left: auto; margin-right: auto;'>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<tbody>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><span style='color: #993366;'>Рейс</span></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><span style='color: #993366;'>Место</span></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><span style='color: #993366;'>Посадка до</span></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><span style='color: #993366;'>№ регистрации</span></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><span style='color: #993366;'>Выход</span></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "</tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><strong>" + flight_id + "</strong></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "<td><strong>" + seat_no + "</strong></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "<td><strong>" + b_before.toString() + "</strong></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  "<td><strong>" + b_no + "</strong></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "<td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "<p><strong>уточните на </strong></p>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "<p><strong>мониторах</strong></p>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "</td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "</tr>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "</tbody>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "</table>";
 
-            QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-            printer->setOutputFormat(QPrinter::PdfFormat);
-            printer->setPaperSize(QPrinter::A4);
-            printer->setOutputFileName(_OutputFolder + "/boarding" + b_no + ".pdf");
-            QTextDocument *q = new QTextDocument();
-            q->setHtml(str);
-            q->setPageSize(printer->pageRect().size());
-            q->print(printer);
+            QPrinter printer = QPrinter(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setPaperSize(QPrinter::A4);
+            printer.setOutputFileName(_OutputFolder + "/boarding" + b_no + ".pdf");
+            QTextDocument q = QTextDocument();
+            q.setHtml(str);
+            q.setPageSize(printer.pageRect().size());
+            q.print(&printer);
         }
     }
 }
@@ -427,19 +416,19 @@ void MainWindow::on_tableView_2_clicked(const QModelIndex &index)
     QModelIndex ind = ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(), 0);
     ui->tableView_2->setCurrentIndex(ind);
     QString ticket_no = ui->tableView_2->model()->data(ui->tableView_2->currentIndex()).toString();
-    QSqlQuery *q = new QSqlQuery();
-    q->prepare("select tick_has_bp(:tick_no);");
-    q->bindValue(0, ticket_no);
+    QSqlQuery q = QSqlQuery();
+    q.prepare("select tick_has_bp(:tick_no);");
+    q.bindValue(0, ticket_no);
     bool b;
-    q->exec();
-    while (q->next()) {
-        b = q->value(0).toBool();
+    q.exec();
+    while (q.next()) {
+        b = q.value(0).toBool();
         if (b){
-            ui->pushButton_5->setEnabled("true");
-            ui->pushButton_2->setDisabled("true");
+            ui->pushButton_5->setEnabled(true);
+            ui->pushButton_2->setDisabled(true);
         } else {
-            ui->pushButton_2->setEnabled("true");
-            ui->pushButton_5->setDisabled("true");
+            ui->pushButton_2->setEnabled(true);
+            ui->pushButton_5->setDisabled(true);
         }
     }
 }

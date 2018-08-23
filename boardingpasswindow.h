@@ -6,6 +6,8 @@
 #include <QRadioButton>
 #include <QWidget>
 #include <QScrollArea>
+#include <QButtonGroup>
+#include <QList>
 #include "qchar.h"
 #include "db.h"
 
@@ -30,13 +32,14 @@ private slots:
     void on_pushButton_4_clicked();
 
 private:
-    //QList<*QCheckBox> checkBoxList;
     DB *db;
     QMainWindow *mainwin;
     QButtonGroup *bgr;
+    QList<QRadioButton*> *bl;
     int fl_id;
     QString tick_no;
     Ui::BoardingPassWindow *ui;
+    QWidget *widget;
 };
 
 #endif // BOARDINGPASSWINDOW_H

@@ -29,6 +29,7 @@ private:
     DB *regdb;
     QMainWindow &win;
     Ui::RegistrationWindow *ui;
+    QRegExpValidator *validator;
 };
 
 #endif // REGISTRATIONWINDOW_H

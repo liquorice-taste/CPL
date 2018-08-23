@@ -7,6 +7,7 @@ AuthorizationWindow::AuthorizationWindow(QWidget *parent) :
     ui(new Ui::AuthorizationWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 AuthorizationWindow::~AuthorizationWindow()
@@ -19,9 +20,12 @@ void AuthorizationWindow::on_pushButton_clicked()
     DB *database = new DB();
     if (!(database->connect(ui->lineEdit->text(), ui->lineEdit_2->text()))) {
         QMessageBox *box = new QMessageBox();
-        box->setText("Соединение не было установлено, повторите попытку");
-        box->setDefaultButton(QMessageBox::Save);
-        box->exec();
+        if (box) {
+            box->setText("Соединение не было установлено, повторите попытку");
+            box->setDefaultButton(QMessageBox::Save);
+            box->exec();
+            delete box;
+        }
     }
     else {
         if (database->checkAdmin()) {

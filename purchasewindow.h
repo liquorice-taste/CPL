@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QSqlQuery>
 
-
+#include <QRegExpValidator>
 #include <db.h>
 
 namespace Ui {
